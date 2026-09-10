@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rosary Wreath Tracker</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #FAF8F5; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .lang-selector, .voice-toggle { display: flex; background-color: #EADFC9; borderRadius: 25px; border-radius: 20px; padding: 4px; margin-bottom: 15px; width: 100%; max-width: 400px; justify-content: space-around; }
+        .voice-toggle { background-color: #EDE6DA; }
+        button.toggle-btn { background: none; border: none; padding: 8px 16px; font-size: 12px; font-weight: 700; color: #5C5C5E; cursor: pointer; border-radius: 15px; flex: 1; }
+        button.toggle-btn.active { background-color: #8B0000; color: #FFF; }
+        .voice-toggle button.toggle-btn.active { background-color: #FFF; color: #8B0000; }
+        .app-title { font-size: 24px; font-weight: 800; color: #2C2C2E; margin: 10px 0 5px; }
+        .step-counter { font-size: 13px; color: #8A8A8E; font-weight: 500; margin-bottom: 15px; }
+        .mountain-map { width: 100%; max-width: 400px; height: 360px; background-color: #EFEBE4; border-radius: 20px; position: relative; overflow: hidden; border: 1px solid #DFD9CE; margin-bottom: 20px; }
+        .mary-peak { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); text-align: center; font-size: 11px; font-weight: 700; color: #B8860B; text-transform: uppercase; }
+        .path-marker { position: absolute; font-size: 14px; font-weight: bold; color: #8B0000; transform: translate(-50%, -50%); transition: opacity 0.3s; }
+        .lamb-container { position: absolute; font-size: 26px; transform: translate(-50%, -50%); z-index: 10; transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), top 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .prayer-card { width: 100%; max-width: 400px; background-color: #FFF; border-radius: 14px; padding: 18px; margin-bottom: 20px; border: 1px solid #EDE8E0; box-sizing: border-box; }
+        .prayer-header { font-size: 11px; font-weight: 700; color: #8A8A8E; text-transform: uppercase; margin-bottom: 6px; }
+        .prayer-text { font-size: 14px; color: #3A3A3C; line-height: 1.5; }
+        .action-btn { width: 100%; max-width: 400px; background-color: #8B0000; color: #FFF; border: none; padding: 16px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(139,0,0,0.2); }
+        .action-btn:disabled { background-color: #A2A2A7; box-shadow: none; cursor: not-allowed; }
+        .reset-btn { background: none; border: none; color: #8A8A8E; font-size: 13px; font-weight: 600; cursor: pointer; padding: 10px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 100; display: none; }
+        .modal { background-color: #FFF; border-radius: 20px; padding: 28px; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .modal-title { font-size: 22px; font-weight: 800; color: #8B0000; margin-bottom: 10px; }
+        .modal-body { font-size: 14px; color: #4A4A4C; line-height: 1.5; margin-bottom: 24px; }
+        .modal-close { width: 100%; background-color: #8B0000; color: #FFF; border: none; padding: 14px; border-radius: 25px; font-size: 14px; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="lang-selector">
+        <button class="toggle-btn active" onclick="setLanguage('en')">ENG</button>
+        <button class="toggle-btn" onclick="setLanguage('it')">ITA</button>
+        <button class="toggle-btn" onclick="setLanguage('es')">ESP</button>
+        <button class="toggle-btn" onclick="setLanguage('ta')">TAM</button>
+    </div>
+
+    <div class="voice-toggle">
+        <button class="toggle-btn active" onclick="setVoice('FEMALE')">Female Guide</button>
+        <button class="toggle-btn" onclick="setVoice('MALE')">Male Guide</button>
+    </div>
+
+    <h1 class="app-title" id="app-title">Rosary Pilgrimage</h1>
+    <div class="step-counter" id="step-counter">Step 0 of 53 Offered</div>
+
+    <div class="mountain-map">
+        <div class="mary-peak">Our Lady</div>
+        <div id="markers-container"></div>
+        <div class="lamb-container" id="lamb">🐑</div>
+    </div>
+
+    <div class="prayer-card">
+        <div class="prayer-header" id="prayer-header">Female System Guide</div>
+        <div class="prayer-text" id="prayer-text">Hail Mary, full of grace, the Lord is with thee...</div>
+    </div>
+
+    <button class="action-btn" id="action-btn" onclick="handleNextStep()">Advance Lamb and Audio</button>
+    <button class="reset-btn" onclick="resetPilgrimage()">Restart Pilgrimage</button>
+
+    <div class="modal-overlay" id="celebration-modal">
+        <div class="modal">
+            <h2 class="modal-title" id="modal-title">Pilgrimage Complete!</h2>
+            <p class="modal-body" id="modal-body">The little lamb has safely arrived at the feet of Our Lady. May peace be with your spirit.</p>
+            <button class="modal-close" onclick="closeModal()">Close Window</button>
+        </div>
+    </div>
+
+    <audio id="audio-player"></audio>
+
+    <script>
+        const TOTAL_STEPS = 53;
+        let progress = 0;
+        let lang = 'en';
+        let voiceMode = 'FEMALE';
+        let audioPlayer = document.getElementById('audio-player');
+
+        const PRAYER_CONTENT = {
+          en: { title: "Rosary Pilgrimage", hailMary: "Hail Mary, full of grace, the Lord is with thee...", congratsTitle: "Pilgrimage Complete!", congratsBody: "The little lamb has safely arrived at the feet of Our Lady. May peace be with your spirit.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } },
+          it: { title: "Pellegrinaggio del Rosario", hailMary: "Ave, o Maria, piena di grazia, il Signore e con te...", congratsTitle: "Pellegrinaggio Completato!", congratsBody: "L'agnellino e arrivato sano e salvo ai piedi della Madonna. La pace sia con te.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } },
+          es: { title: "Peregrinacion del Rosario", hailMary: "Dios te salve, Maria, llena eres de gracia, el Senor es contigo...", congratsTitle: "Peregrinacion Completada!", congratsBody: "El corderito ha llegado a salvo a los pies de Nuestra Senora. La paz este contigo.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } },
+          ta: { title: "Rosary Pilgrimage Tamil", hailMary: "Arul migundha mariyayae vaazhga! karthar ummudaenae...", congratsTitle: "Pilgrimage Complete!", congratsBody: "Aattukkutti annai mariyaavin paadhangalai paadhukaappaaga adaindhadhu.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } }
+        };
+
+        const pathPoints = [];
+        const width = 360; 
+        for (let i = 0; i <= TOTAL_STEPS; i++) {
+            const ratio = i / TOTAL_STEPS;
+            const y = 300 - ratio * 240;
+            const x = 180 + Math.sin(ratio * Math.PI * 3.5) * 55;
+            pathPoints.push({ x, y });
+        }
+
+        function initMap() {
+            const container = document.getElementById('markers-container');
+            container.innerHTML = '';
+            pathPoints.slice(1).forEach((point, index) => {
+                const marker = document.createElement('div');
+                marker.className = 'path-marker';
+                marker.id = `marker-${index + 1}`;
+                marker.style.left = point.x + 'px';
+                marker.style.top = point.y + 'px';
+                marker.innerText = '.';
+                container.appendChild(marker);
+            });
+            updateLambPosition();
+        }
+
+        function updateLambPosition() {
+            const lamb = document.getElementById('lamb');
+            const pt = pathPoints[progress];
+            lamb.style.left = pt.x + 'px';
+            lamb.style.top = pt.y + 'px';
+        }
+
+        function handleNextStep() {
+            if (progress < TOTAL_STEPS) {
+                progress++;
+                updateLambPosition();
+                document.getElementById('step-counter').innerText = `Step ${progress} of 53 Offered`;
+                
+                const marker = document.getElementById(`marker-${progress}`);
+                if (marker) {
+                    marker.innerText = '🌹';
+                    marker.style.opacity = '1';
+                }
+
+                const targetAudioUrl = PRAYER_CONTENT[lang].audioFiles[voiceMode];
+                audioPlayer.src = targetAudioUrl;
+                audioPlayer.play().catch(e => console.log("Audio play caught safely"));
+
+                if (progress === TOTAL_STEPS) {
+                    document.getElementById('action-btn').innerText = "Wreath Completed";
+                    document.getElementById('action-btn').disabled = true;
+                    document.getElementById('modal-title').innerText = PRAYER_CONTENT[lang].congratsTitle;
+                    document.getElementById('modal-body').innerText = PRAYER_CONTENT[lang].congratsBody;
+                    document.getElementById('celebration-modal').style.display = 'flex';
+                }
+            }
+        }
+
+        function setLanguage(selectedLang) {
+            lang = selectedLang;
