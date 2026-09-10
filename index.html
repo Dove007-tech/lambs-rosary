@@ -62,7 +62,7 @@
 
     <div class="prayer-card">
         <div class="prayer-header" id="prayer-header">Introductory Prayer</div>
-        <div class="prayer-text" id="prayer-text">In the name of the Father, and of the Son, and of the Holy Spirit. Amen.</div>
+        <div class="prayer-text" id="prayer-text">Loading...</div>
     </div>
 
     <button class="action-btn" id="action-btn" onclick="handleNextStep()">Begin Rosary</button>
@@ -71,7 +71,7 @@
         <div class="closing-section-title" id="closing-heading">📿 Concluding Devotions</div>
         <div class="closing-card">
             <div class="closing-card-title" id="label-queen">Hail, Holy Queen (Salve Regina)</div>
-            <div class="closing-card-text" id="text-queen">Hail, Holy Queen, Mother of Mercy...</div>
+            <div class="closing-card-text" id="text-queen">Loading...</div>
         </div>
         <button class="reset-btn" id="btn-reset" onclick="resetPilgrimage()">Restart Rosary</button>
     </div>
@@ -80,9 +80,33 @@
         let currentStep = 0;
         let lang = 'en';
         const TOTAL_STEPS = 56; 
+
         const PRAYER_DATA = {
-            en: { title: "The Lost Lamb's Rosary", begin: "Begin Rosary" }
-        };
-    </script>
-</body>
-</html>
+            en: {
+                title: "The Lost Lamb's Rosary",
+                begin: "Begin Rosary",
+                advance: "Advance Lost Lamb 🌹",
+                finished: "Arrived Safely ✨",
+                heading: "📿 Concluding Devotions",
+                peak: "Our Lady",
+                reset: "Restart Rosary",
+                lblQueen: "Hail, Holy Queen (Salve Regina)",
+                steps: [
+                    { header: "Preparation: Sign of the Cross", text: "In the name of the Father, and of the Son, and of the Holy Spirit. Amen." },
+                    { header: "Preparation: The Apostles' Creed", text: "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father almighty; from there he will come to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen." },
+                    { header: "Preparation: Our Father", text: "Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen." }
+                ],
+                hailMary: "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus.\n\nHoly Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+                queen: "Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clemens, o pia, o dulcis Virgo Maria. Amen."
+            },
+            it: {
+                title: "Il Rosario dell'Agnellino",
+                begin: "Inizia il Rosario",
+                advance: "Avanza l'Agnellino 🌹",
+                finished: "Arrivato alla Madonna ✨",
+                heading: "📿 Preghiere Conclusive",
+                peak: "Madonna",
+                reset: "Ricomincia Rosario",
+                lblQueen: "Salve Regina",
+                steps: [
+                    { header: "Passo 1: Segno della Croce", text: "Nel nome del Padre, del Figlio e dello Spirito Santo. Amen." },
