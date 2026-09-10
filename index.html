@@ -3,31 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rosary Wreath Tracker</title>
+    <title>Rosary Pilgrimage Companion</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #FAF8F5; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
-        .lang-selector, .voice-toggle { display: flex; background-color: #EADFC9; borderRadius: 25px; border-radius: 20px; padding: 4px; margin-bottom: 15px; width: 100%; max-width: 400px; justify-content: space-around; }
-        .voice-toggle { background-color: #EDE6DA; }
-        button.toggle-btn { background: none; border: none; padding: 8px 16px; font-size: 12px; font-weight: 700; color: #5C5C5E; cursor: pointer; border-radius: 15px; flex: 1; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #FAF6F0; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .lang-selector, .voice-toggle { display: flex; background-color: #EADFC9; border-radius: 25px; padding: 4px; margin-bottom: 12px; width: 100%; max-width: 420px; justify-content: space-around; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .voice-toggle { background-color: #EDE6DA; margin-bottom: 20px; }
+        button.toggle-btn { background: none; border: none; padding: 10px 16px; font-size: 11px; font-weight: 700; color: #5C5C5E; cursor: pointer; border-radius: 20px; flex: 1; text-transform: uppercase; transition: all 0.2s; }
         button.toggle-btn.active { background-color: #8B0000; color: #FFF; }
         .voice-toggle button.toggle-btn.active { background-color: #FFF; color: #8B0000; }
-        .app-title { font-size: 24px; font-weight: 800; color: #2C2C2E; margin: 10px 0 5px; }
-        .step-counter { font-size: 13px; color: #8A8A8E; font-weight: 500; margin-bottom: 15px; }
-        .mountain-map { width: 100%; max-width: 400px; height: 360px; background-color: #EFEBE4; border-radius: 20px; position: relative; overflow: hidden; border: 1px solid #DFD9CE; margin-bottom: 20px; }
-        .mary-peak { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); text-align: center; font-size: 11px; font-weight: 700; color: #B8860B; text-transform: uppercase; }
-        .path-marker { position: absolute; font-size: 14px; font-weight: bold; color: #8B0000; transform: translate(-50%, -50%); transition: opacity 0.3s; }
-        .lamb-container { position: absolute; font-size: 26px; transform: translate(-50%, -50%); z-index: 10; transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), top 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        .prayer-card { width: 100%; max-width: 400px; background-color: #FFF; border-radius: 14px; padding: 18px; margin-bottom: 20px; border: 1px solid #EDE8E0; box-sizing: border-box; }
-        .prayer-header { font-size: 11px; font-weight: 700; color: #8A8A8E; text-transform: uppercase; margin-bottom: 6px; }
-        .prayer-text { font-size: 14px; color: #3A3A3C; line-height: 1.5; }
-        .action-btn { width: 100%; max-width: 400px; background-color: #8B0000; color: #FFF; border: none; padding: 16px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(139,0,0,0.2); }
-        .action-btn:disabled { background-color: #A2A2A7; box-shadow: none; cursor: not-allowed; }
-        .reset-btn { background: none; border: none; color: #8A8A8E; font-size: 13px; font-weight: 600; cursor: pointer; padding: 10px; }
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 100; display: none; }
-        .modal { background-color: #FFF; border-radius: 20px; padding: 28px; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .modal-title { font-size: 22px; font-weight: 800; color: #8B0000; margin-bottom: 10px; }
-        .modal-body { font-size: 14px; color: #4A4A4C; line-height: 1.5; margin-bottom: 24px; }
-        .modal-close { width: 100%; background-color: #8B0000; color: #FFF; border: none; padding: 14px; border-radius: 25px; font-size: 14px; font-weight: 700; cursor: pointer; }
+        .app-title { font-size: 26px; font-weight: 800; color: #2C2C2E; margin: 5px 0; font-family: Georgia, serif; text-align: center; }
+        .step-counter { font-size: 14px; color: #8A8A8E; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* ⛰️ Beautiful Center Arena Container Layout */
+        .mountain-map { width: 100%; max-width: 420px; height: 420px; background-color: #F3ECE3; border-radius: 30px; position: relative; overflow: hidden; border: 2px solid #E5DED4; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        /* 👸 Center Sacred Portrait Ring Layout */
+        .mary-peak-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center; }
+        .mary-portrait { width: 90px; height: 90px; border-radius: 45px; border: 3px solid #D4AF37; box-shadow: 0 4px 10px rgba(0,0,0,0.15); object-fit: cover; background-color: #FFF; }
+        .peak-label { font-size: 10px; font-weight: 800; color: #B8860B; text-transform: uppercase; margin-top: 6px; letter-spacing: 1px; text-shadow: 0 1px 1px #FFF; }
+        
+        /* 🌹 Styled Custom Rose Gem Path Node Layout */
+        .path-marker { position: absolute; width: 14px; height: 14px; border-radius: 7px; background-color: #D1C9BC; border: 1px solid #B5AD9E; transform: translate(-50%, -50%); transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .path-marker.bloomed { background-color: #D32F2F; border-color: #9A0007; box-shadow: 0 2px 5px rgba(211,47,47,0.4); width: 16px; height: 16px; }
+        
+        /* 🐑 High-Contrast Circular Lamb Tracker Icon */
+        .lamb-container { position: absolute; width: 34px; height: 34px; background-color: #FFFFFF; border: 2px solid #34C759; border-radius: 17px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.15); z-index: 10; transform: translate(-50%, -50%); transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), top 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        
+        .prayer-card { width: 100%; max-width: 420px; background-color: #FFF; border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid #EDE8E0; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .prayer-header { font-size: 11px; font-weight: 700; color: #8A8A8E; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .prayer-text { font-size: 15px; color: #3A3A3C; line-height: 1.6; font-family: Georgia, serif; }
+        .action-btn { width: 100%; max-width: 420px; background-color: #8B0000; color: #FFF; border: none; padding: 18px; border-radius: 30px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 12px; box-shadow: 0 6px 12px rgba(139,0,0,0.25); transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+        .action-btn:active { transform: scale(0.98); box-shadow: 0 3px 6px rgba(139,0,0,0.2); }
+        .action-btn:disabled { background-color: #C7BDB0; box-shadow: none; cursor: not-allowed; }
+        .reset-btn { background: none; border: none; color: #8A8A8E; font-size: 13px; font-weight: 600; cursor: pointer; padding: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 100; display: none; backdrop-filter: blur(4px); }
+        .modal { background-color: #FFF; border-radius: 24px; padding: 32px; width: 100%; max-width: 365px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .modal-title { font-size: 24px; font-weight: 800; color: #8B0000; margin-bottom: 12px; font-family: Georgia, serif; }
+        .modal-body { font-size: 15px; color: #4A4A4C; line-height: 1.6; margin-bottom: 28px; }
+        .modal-close { width: 100%; background-color: #8B0000; color: #FFF; border: none; padding: 16px; border-radius: 25px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(139,0,0,0.2); }
     </style>
 </head>
 <body>
@@ -48,7 +62,12 @@
     <div class="step-counter" id="step-counter">Step 0 of 53 Offered</div>
 
     <div class="mountain-map">
-        <div class="mary-peak">Our Lady</div>
+        <!-- Live Mother Mary Portrait Block -->
+        <div class="mary-peak-container">
+            <img src="https://unsplash.com" alt="Our Lady" class="mary-portrait">
+            <div class="peak-label">Our Lady</div>
+        </div>
+        
         <div id="markers-container"></div>
         <div class="lamb-container" id="lamb">🐑</div>
     </div>
@@ -82,65 +101,17 @@
           en: { title: "Rosary Pilgrimage", hailMary: "Hail Mary, full of grace, the Lord is with thee...", congratsTitle: "Pilgrimage Complete!", congratsBody: "The little lamb has safely arrived at the feet of Our Lady. May peace be with your spirit.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } },
           it: { title: "Pellegrinaggio del Rosario", hailMary: "Ave, o Maria, piena di grazia, il Signore e con te...", congratsTitle: "Pellegrinaggio Completato!", congratsBody: "L'agnellino e arrivato sano e salvo ai piedi della Madonna. La pace sia con te.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } },
           es: { title: "Peregrinacion del Rosario", hailMary: "Dios te salve, Maria, llena eres de gracia, el Senor es contigo...", congratsTitle: "Peregrinacion Completada!", congratsBody: "El corderito ha llegado a salvo a los pies de Nuestra Senora. La paz este contigo.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } },
-          ta: { title: "Rosary Pilgrimage Tamil", hailMary: "Arul migundha mariyayae vaazhga! karthar ummudaenae...", congratsTitle: "Pilgrimage Complete!", congratsBody: "Aattukkutti annai mariyaavin paadhangalai paadhukaappaaga adaindhadhu.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } }
+          ta: { title: "ஜெபமாலை யாத்திரை", hailMary: "அருள் மிகுந்த மரியாயே வாழ்க! கர்த்தர் உம்முடனே...", congratsTitle: "யாத்திரை நிறைவடைந்தது!", congratsBody: "ஆட்டுக்குட்டி அன்னை மரியாவின் பாதங்களை பாதுகாப்பாக அடைந்தது. சமாதானம் உங்களோடு இருக்கட்டும்.", audioFiles: { MALE: "https://soundhelix.com", FEMALE: "https://soundhelix.com" } }
         };
 
+        // Mathematically scaled grid path layout mapping coordinates
         const pathPoints = [];
-        const width = 360; 
         for (let i = 0; i <= TOTAL_STEPS; i++) {
             const ratio = i / TOTAL_STEPS;
-            const y = 300 - ratio * 240;
-            const x = 180 + Math.sin(ratio * Math.PI * 3.5) * 55;
+            const y = 360 - ratio * 240; // Clamped vertical mountain height boundary
+            const x = 210 + Math.sin(ratio * Math.PI * 3.5) * 65; // Wide organic curve buffer bounds
             pathPoints.push({ x, y });
         }
 
         function initMap() {
             const container = document.getElementById('markers-container');
-            container.innerHTML = '';
-            pathPoints.slice(1).forEach((point, index) => {
-                const marker = document.createElement('div');
-                marker.className = 'path-marker';
-                marker.id = `marker-${index + 1}`;
-                marker.style.left = point.x + 'px';
-                marker.style.top = point.y + 'px';
-                marker.innerText = '.';
-                container.appendChild(marker);
-            });
-            updateLambPosition();
-        }
-
-        function updateLambPosition() {
-            const lamb = document.getElementById('lamb');
-            const pt = pathPoints[progress];
-            lamb.style.left = pt.x + 'px';
-            lamb.style.top = pt.y + 'px';
-        }
-
-        function handleNextStep() {
-            if (progress < TOTAL_STEPS) {
-                progress++;
-                updateLambPosition();
-                document.getElementById('step-counter').innerText = `Step ${progress} of 53 Offered`;
-                
-                const marker = document.getElementById(`marker-${progress}`);
-                if (marker) {
-                    marker.innerText = '🌹';
-                    marker.style.opacity = '1';
-                }
-
-                const targetAudioUrl = PRAYER_CONTENT[lang].audioFiles[voiceMode];
-                audioPlayer.src = targetAudioUrl;
-                audioPlayer.play().catch(e => console.log("Audio play caught safely"));
-
-                if (progress === TOTAL_STEPS) {
-                    document.getElementById('action-btn').innerText = "Wreath Completed";
-                    document.getElementById('action-btn').disabled = true;
-                    document.getElementById('modal-title').innerText = PRAYER_CONTENT[lang].congratsTitle;
-                    document.getElementById('modal-body').innerText = PRAYER_CONTENT[lang].congratsBody;
-                    document.getElementById('celebration-modal').style.display = 'flex';
-                }
-            }
-        }
-
-        function setLanguage(selectedLang) {
-            lang = selectedLang;
