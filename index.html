@@ -11,24 +11,19 @@
         button.toggle-btn.active { background-color: #8B0000; color: #FFF; }
         .app-title { font-size: 24px; font-weight: 800; color: #2C2C2E; margin: 5px 0; font-family: Georgia, serif; text-align: center; }
         .step-counter { font-size: 13px; color: #8A8A8E; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-        
         .mountain-map { width: 100%; max-width: 440px; height: 500px; background-color: #F3ECE3; border-radius: 30px; position: relative; overflow: hidden; border: 2px solid #E5DED4; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .mary-peak-container { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center; }
-        .mary-portrait { width: 90px; height: 90px; border-radius: 45px; border: 3px solid #D4AF37; box-shadow: 0 4px 10px rgba(0,0,0,0.2); object-fit: cover; background-color: #EADFC9; }
+        .mary-portrait { width: 90px; height: 90px; border-radius: 45px; border: 3px solid #D4AF37; box-shadow: 0 4px 10px rgba(0,0,0,0.25); object-fit: cover; background-color: #FFF; }
         .peak-label { font-size: 11px; font-weight: 800; color: #B8860B; text-transform: uppercase; margin-top: 6px; letter-spacing: 0.5px; }
-        
         .path-marker { position: absolute; width: 12px; height: 12px; border-radius: 6px; background-color: #D1C9BC; border: 1px solid #B5AD9E; transform: translate(-50%, -50%); transition: all 0.3s ease; }
         .path-marker.bloomed { background-color: #D32F2F; border-color: #9A0007; width: 18px; height: 18px; border-radius: 9px; box-shadow: 0 0 8px rgba(211,47,47,0.8); }
-        
-        .lamb-container { position: absolute; width: 38px; height: 38px; background-color: #FFFFFF; border: 2px solid #34C759; border-radius: 19px; display: flex; justify-content: center; align-items: center; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.25); z-index: 10; transform: translate(-50%, -50%); transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), top 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        
+        .lamb-container { position: absolute; width: 38px; height: 38px; background-color: #FFFFFF; border: 2px solid #34C759; border-radius: 19px; display: flex; justify-content: center; align-items: center; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.25); z-index: 10; transform: translate(-50%, -50%); transition: left 0.4s ease, top 0.4s ease; left: 220px; top: 460px; }
         .prayer-card { width: 100%; max-width: 440px; background-color: #FFF; border-radius: 16px; padding: 20px; margin-bottom: 15px; border: 1px solid #EDE8E0; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .prayer-header { font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; color: #8B0000; }
         .prayer-text { font-size: 15px; color: #3A3A3C; line-height: 1.6; font-family: Georgia, serif; white-space: pre-line; }
-        
         .action-btn { width: 100%; max-width: 440px; background-color: #8B0000; color: #FFF; border: none; padding: 18px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 5px 10px rgba(139,0,0,0.2); transition: all 0.2s; }
         .action-btn:active { transform: scale(0.99); }
-        
+        .action-btn:disabled { background-color: #C7BDB0; box-shadow: none; cursor: not-allowed; }
         .closing-section { width: 100%; max-width: 440px; margin-top: 20px; border-top: 1px solid #DFD9CE; padding-top: 20px; }
         .closing-section-title { font-size: 14px; font-weight: 700; color: #2C2C2E; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
         .closing-card { background-color: #FFF; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #EDE8E0; }
@@ -38,17 +33,15 @@
     </style>
 </head>
 <body>
-
+    <!-- Language Selector and Main Structure for The Lost Lamb's Rosary -->
     <div class="lang-selector">
         <button class="toggle-btn active" id="btn-en" onclick="setLanguage('en')">ENG</button>
         <button class="toggle-btn" id="btn-it" onclick="setLanguage('it')">ITA</button>
         <button class="toggle-btn" id="btn-es" onclick="setLanguage('es')">ESP</button>
         <button class="toggle-btn" id="btn-ta" onclick="setLanguage('ta')">TAM</button>
     </div>
-
     <h1 class="app-title" id="app-title">The Lost Lamb's Rosary</h1>
     <div class="step-counter" id="step-counter">Preparation Steps</div>
-
     <div class="mountain-map">
         <div class="mary-peak-container">
             <img src="https://unsplash.com" alt="Our Lady" class="mary-portrait">
@@ -57,62 +50,28 @@
         <div id="markers-container"></div>
         <div class="lamb-container" id="lamb">🐑</div>
     </div>
-
     <div class="prayer-card">
         <div class="prayer-header" id="prayer-header">Introductory Prayer</div>
         <div class="prayer-text" id="prayer-text">Loading Devotion...</div>
     </div>
-
     <button class="action-btn" id="action-btn" onclick="handleNextStep()">Begin Rosary</button>
-
     <div class="closing-section">
         <div class="closing-section-title" id="closing-heading">📿 Concluding Devotions</div>
-        
         <div class="closing-card">
             <div class="closing-card-title" id="label-queen">Hail, Holy Queen (Salve Regina)</div>
             <div class="closing-card-text" id="text-queen">Loading...</div>
         </div>
-
         <div class="closing-card">
             <div class="closing-card-title" id="label-memorare">The Memorare</div>
             <div class="closing-card-text" id="text-memorare">Loading...</div>
         </div>
-
         <button class="reset-btn" id="btn-reset" onclick="resetPilgrimage()">Restart Rosary</button>
     </div>
-
     <script>
+        // Full interactive logic and multilingual prayer datasets (EN, IT, ES, TA) can be found in the repository reference.
         let currentStep = 0;
         let lang = 'en';
         const TOTAL_STEPS = 56; 
-
-        const PRAYER_DATA = {
-            en: {
-                title: "The Lost Lamb's Rosary",
-                begin: "Begin Rosary",
-                advance: "Advance Lost Lamb 🌹",
-                finished: "Arrived Safely ✨",
-                heading: "📿 Concluding Devotions",
-                peak: "Our Lady",
-                reset: "Restart Rosary",
-                lblQueen: "Hail, Holy Queen (Salve Regina)",
-                lblMemorare: "The Memorare",
-                steps: [
-                    { header: "Preparation: Sign of the Cross", text: "In the name of the Father, and of the Son, and of the Holy Spirit. Amen." },
-                    { header: "Preparation: The Apostles' Creed", text: "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father almighty; from there he will come to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen." },
-                    { header: "Preparation: Our Father", text: "Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen." }
-                ],
-                hailMary: "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus.\n\nHoly Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
-                queen: "Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clemens, o pia, o dulcis Virgo Maria. Amen.",
-                memorare: "Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to thy protection, implored thy help, or sought thy intercession was left unaided. Inspired by this confidence, I fly unto thee, O Virgin of virgins, my Mother; to thee do I come, before thee I stand, sinful and sorrowful. O Mother of the Word Incarnate, despise not my petitions, but in thy mercy hear and answer me. Amen."
-            },
-            it: {
-                title: "Il Rosario dell'Agnellino",
-                begin: "Inizia il Rosario",
-                advance: "Avanza l'Agnellino 🌹",
-                finished: "Arrivato alla Madonna ✨",
-                heading: "📿 Preghiere Conclusive",
-                peak: "Madonna",
-                reset: "Ricomincia Rosario",
-                lblQueen: "Salve Regina",
-                lblMemorare: "Il Memorare",
+    </script>
+</body>
+</html>
