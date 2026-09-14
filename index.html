@@ -7,7 +7,7 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #FAF6F0; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; box-sizing: border-box; }
         .lang-selector { display: flex; background-color: #EADFC9; border-radius: 25px; padding: 4px; margin-bottom: 20px; width: 100%; max-width: 440px; justify-content: space-around; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        button.toggle-btn { background: none; border: none; padding: 10px 14px; font-size: 11px; font-weight: 700; color: #5C5C5E; cursor: pointer; border-radius: 20px; flex: 1; text-transform: uppercase; transition: all 0.2s; }
+        button.toggle-btn { background: none; border: none; padding: 10px 14px; font-size: 12px; font-weight: 700; color: #5C5C5E; cursor: pointer; border-radius: 20px; flex: 1; text-transform: uppercase; transition: all 0.2s; }
         button.toggle-btn.active { background-color: #8B0000; color: #FFF; }
         .app-title { font-size: 24px; font-weight: 800; color: #2C2C2E; margin: 5px 0; font-family: Georgia, serif; text-align: center; }
         .step-counter { font-size: 13px; color: #8A8A8E; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -16,7 +16,7 @@
         .map-bg-grass { position: absolute; bottom: 0; width: 100%; height: 350px; background-color: #C8E6C9; border-top-left-radius: 50% 20px; border-top-right-radius: 50% 20px; }
         
         .mary-peak-container { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center; }
-        .mary-portrait { width: 90px; height: 90px; border-radius: 45px; border: 4px solid #FFD54F; box-shadow: 0 4px 10px rgba(0,0,0,0.15); object-fit: cover; background-color: #FFF; }
+        .crown-box { width: 80px; height: 80px; border-radius: 40px; border: 4px solid #FFD54F; box-shadow: 0 4px 10px rgba(0,0,0,0.15); background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 36px; }
         .peak-label { font-size: 11px; font-weight: 800; color: #5D4037; text-transform: uppercase; margin-top: 6px; letter-spacing: 0.5px; background-color: #FFF; padding: 2px 8px; border-radius: 10px; border: 1px solid #FFD54F; }
         
         .path-marker { position: absolute; width: 14px; height: 14px; border-radius: 7px; background-color: #FFF; border: 2px solid #A1887F; transform: translate(-50%, -50%); transition: all 0.3s ease; }
@@ -43,7 +43,6 @@
 <body>
     <div class="lang-selector">
         <button class="toggle-btn active" id="btn-en" onclick="setLanguage('en')">ENG</button>
-        <button class="toggle-btn" id="btn-it" onclick="setLanguage('it')">ITA</button>
         <button class="toggle-btn" id="btn-ta" onclick="setLanguage('ta')">TAM</button>
     </div>
 
@@ -53,7 +52,7 @@
     <div class="mountain-map">
         <div class="map-bg-grass"></div>
         <div class="mary-peak-container">
-            <img src="https://unsplash.com" alt="Our Lady" class="mary-portrait">
+            <div class="crown-box">👑</div>
             <div class="peak-label" id="peak-label">Our Lady</div>
         </div>
         <div id="markers-container"></div>
@@ -92,21 +91,21 @@
                 reset: "Restart Rosary",
                 lblQueen: "Hail, Holy Queen (Salve Regina)",
                 steps: [
-                    { header: "Preparation: Sign of the Cross", text: "In the name of the Father, and of the Son, and of the Holy Spirit. Amen." },
+                    { header: "Preparation: The Sign of the Cross", text: "In the name of the Father, and of the Son, and of the Holy Spirit. Amen." },
                     { header: "Preparation: The Apostles' Creed", text: "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father almighty; from there he will come to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen." },
                     { header: "Preparation: Our Father", text: "Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen." }
                 ],
                 hailMary: "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus.\n\nHoly Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
                 queen: "Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope. To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clemens, o pia, o dulcis Virgo Maria. Amen."
             },
-            it: {
-                title: "Il Rosario dell'Agnellino",
-                begin: "Inizia il Rosario",
-                advance: "Avanza l'Agnellino 🌹",
-                finished: "Arrivato alla Madonna ✨",
-                heading: "📿 Preghiere Conclusive",
-                peak: "Madonna",
-                reset: "Ricomincia Rosario",
-                lblQueen: "Salve Regina",
+            ta: {
+                title: "ஆட்டுக்குட்டியின் ஜெபமாலை",
+                begin: "ஜெபமாலை ஆரம்பி",
+                advance: "ஆட்டுக்குட்டியை நகர்த்து 🌹",
+                finished: "அன்னையை அடைந்தது ✨",
+                heading: "📿 முடிவு ஜெபங்கள்",
+                peak: "அன்னை மரியா",
+                reset: "மீண்டும் ஆரம்பி",
+                lblQueen: "அதிதூய இராக்கினியே வாழ்க (சால்வே ரெஜினா)",
                 steps: [
-                    { header: "Passo 1: Segno della Croce", text: "Nel nome del Padre, del Figlio e dello Spirito Santo. Amen." },
+                    { header: "படி 1: சிலுவை அடையாளம்", text: "பிதா, சுதன், பரிசுத்த ஆவியின் பெயராலே. ஆமென்." },
