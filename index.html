@@ -3,87 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>54-Day Novena Progress Tracker</title>
+    <title>54-Day Novena Pilgrimage Tracker</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #E8F5E9; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; box-sizing: border-box; }
-        .app-title { font-size: 24px; font-weight: 800; color: #1B5E20; margin: 20px 0 5px 0; font-family: Georgia, serif; text-align: center; }
-        .grid-chart-title { font-size: 13px; font-weight: 800; color: #4CAF50; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+        .app-title { font-size: 24px; font-weight: 800; color: #1B5E20; margin: 15px 0 5px 0; font-family: Georgia, serif; text-align: center; }
+        .grid-chart-title { font-size: 13px; font-weight: 800; color: #4CAF50; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
         
-        /* ⛰️ Visual Trail Board Panel Container Layout */
-        .mountain-map { width: 360px; height: 160px; background-color: #A5D6A7; border-radius: 30px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
-        .crown-box { width: 70px; height: 70px; border-radius: 35px; border: 4px solid #FFD54F; background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 32px; transition: all 0.3s ease; }
+        .mountain-map { width: 360px; height: 130px; background-color: #A5D6A7; border-radius: 25px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; }
+        .crown-box { width: 64px; height: 64px; border-radius: 32px; border: 4px solid #FFD54F; background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 28px; transition: all 0.3s ease; }
         .crown-box.garlanded { background-color: #FFF0F5; border-color: #FF69B4; box-shadow: 0 0 15px #FF69B4; }
         
-        /* 🚨 Dynamic Milestone Alert Box Wrapper Layout */
-        .milestone-alert { width: 100%; max-width: 360px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 20px; box-sizing: border-box; text-align: center; font-size: 14px; font-weight: 700; color: #1B5E20; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); min-height: 80px; display: flex; align-items: center; justify-content: center; }
+        .milestone-alert { width: 100%; max-width: 360px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 15px; box-sizing: border-box; text-align: center; font-size: 14px; font-weight: 700; color: #1B5E20; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); min-height: 80px; display: flex; align-items: center; justify-content: center; }
         
-        /* 📅 Pure Numeric 1 to 54 Novena Grid Layout (Bottom-To-Top) */
-        .novena-grid { display: flex; flex-direction: column-reverse; gap: 6px; width: 100%; max-width: 360px; background-color: #FFF; border-radius: 18px; padding: 12px; box-sizing: border-box; border: 2px solid #A5D6A7; margin-bottom: 20px; }
+        /* 📅 Stacking Layout Grid Container Frame */
+        .novena-grid-container { width: 100%; max-width: 360px; position: relative; margin-bottom: 15px; background-color: #FFF; border-radius: 18px; padding: 12px; box-sizing: border-box; border: 2px solid #A5D6A7; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .novena-grid { display: flex; flex-direction: column-reverse; gap: 6px; width: 100%; }
         .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; width: 100%; }
-        .grid-day { height: 36px; background-color: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 700; color: #616161; transition: all 0.2s; cursor: pointer; }
-        .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; color: #FFF; }
-        .grid-day.current { background-color: #81C784; border-color: #2E7D32; color: #FFF; font-size: 14px; box-shadow: 0 0 8px #2E7D32; }
         
-        .action-btn { width: 100%; max-width: 360px; background-color: #1B5E20; color: #FFF; border: none; padding: 16px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); }
-        .reset-btn { background: none; border: none; color: #757575; font-size: 12px; font-weight: 600; cursor: pointer; padding: 8px; text-transform: uppercase; width: 100%; text-align: center; margin-top: 10px; }
+        .grid-day { height: 42px; background-color: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 700; color: #616161; transition: all 0.2s; position: relative; }
+        .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; color: #FFF; }
+        .grid-day.current { background-color: #81C784; border-color: #2E7D32; color: #FFF; font-size: 14px; }
+        
+        /* 🐑 Leaping Pilgrim Sheep Layer Mapping Layout */
+        .lamb-actor { position: absolute; width: 34px; height: 34px; background-color: #FFFFFF; border: 2px solid #1B5E20; border-radius: 17px; display: flex; justify-content: center; align-items: center; font-size: 18px; box-shadow: 0 3px 6px rgba(0,0,0,0.2); z-index: 20; transform: translate(-50%, -50%); transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: none; pointer-events: none; }
+        
+        .action-btn { width: 100%; max-width: 360px; background-color: #1B5E20; color: #FFF; border: none; padding: 16px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); -webkit-tap-highlight-color: transparent; }
+        .action-btn:active { transform: scale(0.99); }
+        .reset-btn { background: none; border: none; color: #757575; font-size: 12px; font-weight: 600; cursor: pointer; padding: 8px; text-transform: uppercase; width: 100%; text-align: center; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <!-- App Headings -->
     <h1 class="app-title">54-Day Novena Pilgrimage</h1>
     <div class="grid-chart-title">Novena Day Calendar Chart</div>
 
-    <!-- Crown Visual Box Panel -->
     <div class="mountain-map">
         <div class="crown-box" id="crown-element">👑</div>
     </div>
 
-    <!-- Milestone Message Display Box -->
-    <div class="milestone-alert" id="milestone-box">Welcome to your 54-Day Novena. Click the button below to log your daily progress!</div>
+    <div class="milestone-alert" id="milestone-box">Welcome! Click below to start your 54-Day Novena progress track.</div>
 
-    <!-- Native 54-Day Ascending Board Rows Matrix Structure -->
-    <div id="chart-grid" class="novena-grid">
-        <div class="grid-row">
-            <div class="grid-day" id="day-49">49</div><div class="grid-day" id="day-50">50</div><div class="grid-day" id="day-51">51</div><div class="grid-day" id="day-52">52</div><div class="grid-day" id="day-53">53</div><div class="grid-day" id="day-54">54</div>
+    <!-- Interactive Grid Container holding both the boxes and the sheep sprite layer overlay -->
+    <div class="novena-grid-container">
+        <div id="chart-grid" class="novena-grid">
+            <div class="grid-row">
+                <div class="grid-day" id="day-49">49</div><div class="grid-day" id="day-50">50</div><div class="grid-day" id="day-51">51</div><div class="grid-day" id="day-52">52</div><div class="grid-day" id="day-53">53</div><div class="grid-day" id="day-54">54</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-43">43</div><div class="grid-day" id="day-44">44</div><div class="grid-day" id="day-45">45</div><div class="grid-day" id="day-46">46</div><div class="grid-day" id="day-47">47</div><div class="grid-day" id="day-48">48</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-37">37</div><div class="grid-day" id="day-38">38</div><div class="grid-day" id="day-39">39</div><div class="grid-day" id="day-40">40</div><div class="grid-day" id="day-41">41</div><div class="grid-day" id="day-42">42</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-31">31</div><div class="grid-day" id="day-32">32</div><div class="grid-day" id="day-33">33</div><div class="grid-day" id="day-34">34</div><div class="grid-day" id="day-35">35</div><div class="grid-day" id="day-36">36</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-25">25</div><div class="grid-day" id="day-26">26</div><div class="grid-day" id="day-27">27</div><div class="grid-day" id="day-28">28</div><div class="grid-day" id="day-29">29</div><div class="grid-day" id="day-30">30</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-19">19</div><div class="grid-day" id="day-20">20</div><div class="grid-day" id="day-21">21</div><div class="grid-day" id="day-22">22</div><div class="grid-day" id="day-23">23</div><div class="grid-day" id="day-24">24</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-13">13</div><div class="grid-day" id="day-14">14</div><div class="grid-day" id="day-15">15</div><div class="grid-day" id="day-16">16</div><div class="grid-day" id="day-17">17</div><div class="grid-day" id="day-18">18</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-7">7</div><div class="grid-day" id="day-8">8</div><div class="grid-day" id="day-9">9</div><div class="grid-day" id="day-10">10</div><div class="grid-day" id="day-11">11</div><div class="grid-day" id="day-12">12</div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-day" id="day-1">1</div><div class="grid-day" id="day-2">2</div><div class="grid-day" id="day-3">3</div><div class="grid-day" id="day-4">4</div><div class="grid-day" id="day-5">5</div><div class="grid-day" id="day-6">6</div>
+            </div>
         </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-43">43</div><div class="grid-day" id="day-44">44</div><div class="grid-day" id="day-45">45</div><div class="grid-day" id="day-46">46</div><div class="grid-day" id="day-47">47</div><div class="grid-day" id="day-48">48</div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-37">37</div><div class="grid-day" id="day-38">38</div><div class="grid-day" id="day-39">39</div><div class="grid-day" id="day-40">40</div><div class="grid-day" id="day-41">41</div><div class="grid-day" id="day-42">42</div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-31">31</div><div class="grid-day" id="day-32">32</div><div class="grid-day" id="day-33">33</div><div class="grid-day" id="day-34">34</div><div class="grid-day" id="day-35">35</div><div class="grid-day" id="day-36">36</div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-25">25</div><div class="grid-day" id="day-26">26</div><div class="grid-day" id="day-27">27</div><div class="grid-day" id="day-28">28</div><div class="grid-day" id="day-29">29</div><div class="grid-day" id="day-30">30</div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-19">19</div><div class="grid-day" id="day-20">20</div><div class="grid-day" id="day-21">21</div><div class="grid-day" id="day-22">22</div><div class="grid-day" id="day-23">23</div><div class="grid-day" id="day-24">24</div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-13">13</div><div class="grid-day" id="day-14">14</div><div class="grid-day" id="day-15">15</div><div class="grid-day" id="day-16">16</div><div class="grid-day" id="day-17">17</div><div class="grid-day" id="day-18">18</div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-7">7</div><div class="grid-day" id="day-8">8</div><div class="grid-day" id="day-9">9</div><div class="grid-day" id="day-10">10</div><div class="grid-day" id="day-11">11</div><div class="grid-day" id="day-12">12</div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-day" id="day-1">1</div><div class="grid-day" id="day-2">2</div><div class="grid-day" id="day-3">3</div><div class="grid-day" id="day-4">4</div><div class="grid-day" id="day-5">5</div><div class="grid-day" id="day-6">6</div>
-        </div>
+        <div class="lamb-actor" id="moving-sheep">🐑</div>
     </div>
 
-    <!-- Active Step Progress Button -->
-    <button class="action-btn" id="action-btn" onclick="handleNextStep()">Log Next Day Progress 🌹</button>
-    
-    <!-- Reset Button -->
+    <button class="action-btn" id="action-btn" onclick="handleNextStep()">Begin Novena Journey</button>
     <button class="reset-btn" id="btn-reset" onclick="resetNovena()">Reset Tracker Progress</button>
 
     <script>
         let currentDay = 0;
         const TOTAL_DAYS = 54;
 
-        // Custom, non-Option B spiritual entries configured for milestone states
         const MILESTONE_MESSAGES = {
             day9: "✨ Day 9 Milestone reached!\nNine days of dedicated prayer have carved a path of light into your soul. You are building a beautiful holy habit. Rest your worries here today and let grace guide your steps tomorrow.",
             day27: "🎁 Day 27 Halfway Threshold!\n27 days of constant devotion accomplished! Halfway up the mountain trail, your spirit is growing stronger. Receive the gift of profound inner peace today. Trust that the seeds you have planted in prayer are already blooming.",
@@ -95,8 +95,9 @@
             const milestoneBox = document.getElementById('milestone-box');
             const crownElement = document.getElementById('crown-element');
             const actionBtn = document.getElementById('action-btn');
+            const sheep = document.getElementById('moving-sheep');
 
-            // Reset all calendar block visual classes cleanly
+            // 1. Loop and configure background states for the numbered boxes
             for (let d = 1; d <= TOTAL_DAYS; d++) {
                 const dayBox = document.getElementById(`day-${d}`);
                 if (dayBox) {
@@ -109,20 +110,9 @@
                 }
             }
 
-            // Milestone conditions checker loop logic
-            if (currentDay === 0) {
-                milestoneBox.innerText = "Welcome to your 54-Day Novena. Click the button below to log your daily progress!";
-                crownElement.classList.remove('garlanded');
-                crownElement.innerText = "👑";
-                actionBtn.disabled = false;
-                actionBtn.innerText = "Begin Novena Journey";
-            } else if (currentDay === 9) {
-                milestoneBox.innerText = MILESTONE_MESSAGES.day9;
-            } else if (currentDay === 27) {
-                milestoneBox.innerText = MILESTONE_MESSAGES.day27;
-            } else if (currentDay > 27 && currentDay < 54) {
-                milestoneBox.innerText = `Day ${currentDay}: ${MILESTONE_MESSAGES.thanksgiving}`;
-            } else if (currentDay === 54) {
-                milestoneBox.innerText = MILESTONE_MESSAGES.day54;
-                crownElement.classList.add('garlanded');
-                crownElement.innerText = "🌸";
+            // 2. Snap the sheep element frame directly on top of the active grid coordinate cell
+            if (currentDay > 0 && currentDay <= TOTAL_DAYS) {
+                const currentBox = document.getElementById(`day-${currentDay}`);
+                if (currentBox) {
+                    sheep.style.display = "flex";
+                    // Map box coordinates relative to parent container
