@@ -8,64 +8,37 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #E8F5E9; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; box-sizing: border-box; overflow-x: hidden; position: relative; }
         .app-title { font-size: 24px; font-weight: 800; color: #1B5E20; margin: 15px 0 5px 0; font-family: Georgia, serif; text-align: center; }
         .grid-chart-title { font-size: 13px; font-weight: 800; color: #4CAF50; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
-        
-        .mountain-map { width: 100%; max-width: 380px; height: 110px; background-color: #A5D6A7; border-radius: 25px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; }
+        .mountain-map { width: 100%; max-width: 380px; height: 110px; background-color: #A5D6A7; border-radius: 25px; position: relative; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; }
         .crown-box { width: 60px; height: 60px; border-radius: 30px; border: 4px solid #FFD54F; background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 26px; transition: all 0.3s ease; }
         .crown-box.garlanded { background-color: #FFF0F5; border-color: #FF69B4; box-shadow: 0 0 15px #FF69B4; }
-        
         .milestone-alert { width: 100%; max-width: 380px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 15px; box-sizing: border-box; text-align: center; font-size: 14px; font-weight: 700; color: #1B5E20; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); min-height: 90px; display: flex; align-items: center; justify-content: center; z-index: 10; }
-        
-        .novena-grid-container { width: 100%; max-width: 380px; background-color: #FFF; border-radius: 20px; padding: 15px; box-sizing: border-box; border: 2px solid #A5D6A7; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 15px; }
+        .novena-grid-container { width: 100%; max-width: 380px; background-color: #FFF; border-radius: 20px; padding: 15px; box-sizing: border-box; border: 2px solid #A5D6A7; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 15px; display: flex; justify-content: center; }
         .novena-grid { display: flex; flex-direction: column-reverse; gap: 8px; width: 100%; }
         .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; width: 100%; justify-items: center; }
-        
         .grid-day { width: 52px; height: 52px; background-color: #F9F9F9; border: 1px solid #D5CDBF; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 4px 0 4px 0; box-sizing: border-box; transition: all 0.2s; position: relative; }
         .grid-day span { font-size: 11px; font-weight: 800; color: #757575; line-height: 11px; }
         .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; }
         .grid-day.passed span { color: rgba(255,255,255,0.7); }
         .grid-day.current { background-color: #A5D6A7; border-color: #2E7D32; box-shadow: 0 0 8px rgba(46,125,50,0.4); }
         .grid-day.current span { color: #1B5E20; }
-        
         .sheep-slot { font-size: 20px; height: 24px; line-height: 24px; display: flex; justify-content: center; align-items: center; width: 100%; }
-        
         .action-btn { width: 100%; max-width: 380px; background-color: #1B5E20; color: #FFF; border: none; padding: 18px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); -webkit-tap-highlight-color: transparent; z-index: 10; }
         .action-btn:active { transform: scale(0.99); }
         .reset-btn { background: none; border: none; color: #757575; font-size: 12px; font-weight: 600; cursor: pointer; padding: 8px; text-transform: uppercase; width: 100%; text-align: center; margin-top: 5px; z-index: 10; }
-
         .celebration-element { position: absolute; font-size: 28px; pointer-events: none; z-index: 100; animation: floatUp 3.5s linear forwards; bottom: -50px; }
-        @keyframes floatUp {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
-            50% { transform: translateY(-50vh) translateX(25px) rotate(180deg); opacity: 1; }
-            100% { transform: translateY(-105vh) translateX(-25px) rotate(360deg); opacity: 0; }
-        }
+        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
-
     <h1 class="app-title">54-Day Novena Pilgrimage</h1>
     <div class="grid-chart-title">Novena Day Calendar Chart</div>
-
-    <div class="mountain-map">
-        <div class="map-bg-grass"></div>
-        <div class="mary-peak-container">
-            <div class="crown-box" id="crown-element">👑</div>
-        </div>
-    </div>
-
-    <div class="milestone-alert" id="milestone-box">Welcome! Click below to start your 54-Day Novena progress track.</div>
-
-    <div class="novena-grid-container">
-        <div id="chart-grid" class="novena-grid"></div>
-    </div>
-
-    <button class="action-btn" id="action-btn" onclick="handleNextStep()">Begin Novena Journey</button>
+    <div class="mountain-map"><div class="crown-box" id="crown-element">👑</div></div>
+    <div class="milestone-alert" id="milestone-box"></div>
+    <div class="novena-grid-container"><div id="chart-grid" class="novena-grid"></div></div>
+    <button class="action-btn" id="action-btn" onclick="handleNextStep()"></button>
     <button class="reset-btn" id="btn-reset" onclick="resetNovena()">Reset Tracker Progress</button>
-
     <script>
-        let currentDay = 0;
-        const TOTAL_DAYS = 54;
-        let partyInterval = null;
-
+        let currentDay = 0; const TOTAL_DAYS = 54; let partyInterval = null;
         const MILESTONE_MESSAGES = {
             day0: "Welcome to your 54-Day Novena tracker! Click the button below to start your spiritual journey.",
             day9: "✨ Day 9 Milestone reached!\n\nNine days of dedicated prayer have carved a path of light into your soul. You are building a beautiful holy habit. Rest your worries here today and let grace guide your steps tomorrow.",
@@ -73,83 +46,48 @@
             thanksgiving: "🌻 Thanksgiving Novena Mode:\n\nYou are now entering the second 27-day segment, tracking your path with an attitude of gratitude.",
             day54: "🌸 FULFILLED IN GRACE! 🌸\n\nCongratulations, faithful soul! 54 days of unwavering devotion are complete. You have climbed the mountain and placed a glorious crown of flowers upon the head of Mother Mary. May the seeds of prayer you planted with tears now bloom into a harvest of deep peace and boundless heavenly blessings. The hand of Our Lady rests upon you! ✨💐"
         };
-
         function buildGridUI() {
-            const grid = document.getElementById('chart-grid');
-            grid.innerHTML = '';
-            
+            const grid = document.getElementById('chart-grid'); grid.innerHTML = '';
             for (let row = 0; row < 9; row++) {
-                const rowDiv = document.createElement('div');
-                rowDiv.className = 'grid-row';
-                
+                let html = '';
                 for (let col = 1; col <= 6; col++) {
-                    const dayNum = (row * 6) + col;
-                    
-                    const dayBox = document.createElement('div');
-                    dayBox.className = 'grid-day';
-                    dayBox.id = `day-${dayNum}`;
-                    
-                    const span = document.createElement('span');
-                    span.innerText = dayNum;
-                    
-                    const slot = document.createElement('div');
-                    slot.className = 'sheep-slot';
-                    slot.id = `slot-${dayNum}`;
-                    
-                    dayBox.appendChild(span);
-                    dayBox.appendChild(slot);
-                    rowDiv.appendChild(dayBox);
+                    let num = (row * 6) + col;
+                    html += `<div class="grid-day" id="day-${num}"><span>${num}</span><div class="sheep-slot" id="slot-${num}"></div></div>`;
                 }
-                grid.appendChild(rowDiv);
+                const rowDiv = document.createElement('div'); rowDiv.className = 'grid-row'; rowDiv.innerHTML = html; grid.appendChild(rowDiv);
             }
         }
-
         function triggerFlyingPartyEngine() {
-            const items = ['🎈', '🎉', '🎊', '🌸', '🌹', '🌺', '✨'];
-            if(partyInterval) clearInterval(partyInterval);
-
+            const items = ['🎈', '🎉', '🎊', '🌸', '🌹', '🌺', '✨']; if(partyInterval) clearInterval(partyInterval);
             partyInterval = setInterval(() => {
-                const element = document.createElement('div');
-                element.className = 'celebration-element';
-                element.innerText = items[Math.floor(Math.random() * items.length)];
-                element.style.left = Math.random() * 90 + 5 + 'vw';
-                element.style.animationDuration = Math.random() * 2 + 2 + 's';
-                document.body.appendChild(element);
-
+                const element = document.createElement('div'); element.className = 'celebration-element';
+                element.innerText = items[Math.floor(Math.random() * items.length)]; element.style.left = Math.random() * 90 + 5 + 'vw';
+                element.style.animationDuration = Math.random() * 2 + 2 + 's'; document.body.appendChild(element);
                 setTimeout(() => { element.remove(); }, 3500);
             }, 150);
         }
-
         function updateTrackerDisplay() {
-            const milestoneBox = document.getElementById('milestone-box');
-            const crownElement = document.getElementById('crown-element');
-            const actionBtn = document.getElementById('action-btn');
-
+            const milestoneBox = document.getElementById('milestone-box'); const crownElement = document.getElementById('crown-element'); const actionBtn = document.getElementById('action-btn');
             for (let d = 1; d <= TOTAL_DAYS; d++) {
-                const dayBox = document.getElementById(`day-${d}`);
-                const slot = document.getElementById(`slot-${d}`);
-                
+                const dayBox = document.getElementById(`day-${d}`); const slot = document.getElementById(`slot-${d}`);
                 if (dayBox && slot) {
-                    dayBox.classList.remove('passed', 'current');
-                    slot.innerText = "";
-                    
-                    if (d < currentDay) {
-                        dayBox.classList.add('passed');
-                    } else if (d === currentDay) {
-                        dayBox.classList.add('current');
-                        slot.innerText = "🐑"; 
-                    }
+                    dayBox.classList.remove('passed', 'current'); slot.innerText = "";
+                    if (d < currentDay) { dayBox.classList.add('passed'); } 
+                    else if (d === currentDay) { dayBox.classList.add('current'); slot.innerText = "🐑"; }
                 }
             }
-
             if (currentDay === 0) {
                 if(partyInterval) { clearInterval(partyInterval); partyInterval = null; }
-                milestoneBox.innerText = MILESTONE_MESSAGES.day0;
-                crownElement.classList.remove('garlanded');
-                crownElement.innerText = "👑";
-                actionBtn.disabled = false;
-                actionBtn.innerText = "Begin Novena Journey";
-            } else if (currentDay === 9) {
-                milestoneBox.innerText = MILESTONE_MESSAGES.day9;
-            } else if (currentDay === 27) {
-                milestoneBox.innerText = MILESTONE_MESSAGES.day27;
+                milestoneBox.innerText = MILESTONE_MESSAGES.day0; crownElement.className = 'crown-box'; crownElement.innerText = "👑"; actionBtn.disabled = false; actionBtn.innerText = "Begin Novena Journey";
+            } else if (currentDay === 9) { milestoneBox.innerText = MILESTONE_MESSAGES.day9; } else if (currentDay === 27) { milestoneBox.innerText = MILESTONE_MESSAGES.day27; } 
+            else if (currentDay > 27 && currentDay < 54) { milestoneBox.innerText = MILESTONE_MESSAGES.thanksgiving + ` (Day ${currentDay})`; } 
+            else if (currentDay === 54) { milestoneBox.innerText = MILESTONE_MESSAGES.day54; crownElement.classList.add('garlanded'); crownElement.innerText = "🌸"; actionBtn.innerText = "Novena Fulfilled ✨"; actionBtn.disabled = true; triggerFlyingPartyEngine(); } 
+            else { milestoneBox.innerText = `Day ${currentDay} complete. Keep moving forward!`; }
+            if (currentDay > 0 && currentDay < 54) { actionBtn.innerText = `Log Day ${currentDay + 1} Progress 🌹`; }
+        }
+        function handleNextStep() { if (currentDay < TOTAL_DAYS) { currentDay++; updateTrackerDisplay(); } }
+        function resetNovena() { currentDay = 0; updateTrackerDisplay(); }
+        buildGridUI(); updateTrackerDisplay();
+    </script>
+</body>
+</html>
