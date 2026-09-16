@@ -6,60 +6,39 @@
     <title>54-Day Novena Pilgrimage Tracker</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #E8F5E9; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; box-sizing: border-box; }
-        .lang-selector { display: flex; background-color: #C8E6C9; border-radius: 25px; padding: 4px; margin-bottom: 15px; width: 100%; max-width: 380px; justify-content: space-around; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        button.toggle-btn { background: none; border: none; padding: 10px 14px; font-size: 12px; font-weight: 700; color: #2E7D32; cursor: pointer; border-radius: 20px; flex: 1; text-transform: uppercase; transition: all 0.2s; }
-        button.toggle-btn.active { background-color: #1B5E20; color: #FFF; }
-        .app-title { font-size: 24px; font-weight: 800; color: #1B5E20; margin: 15px 0 5px 0; font-family: Georgia, serif; text-align: center; }
-        .grid-chart-title { font-size: 13px; font-weight: 800; color: #4CAF50; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+        .app-title { font-size: 24px; font-weight: 800; color: #1B5E20; margin: 20px 0 5px 0; font-family: Georgia, serif; text-align: center; }
+        .grid-chart-title { font-size: 13px; font-weight: 800; color: #4CAF50; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
         
-        .mountain-map { width: 100%; max-width: 380px; height: 110px; background-color: #A5D6A7; border-radius: 25px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; }
+        .mountain-map { width: 100%; max-width: 360px; height: 110px; background-color: #A5D6A7; border-radius: 25px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
         .crown-box { width: 60px; height: 60px; border-radius: 30px; border: 4px solid #FFD54F; background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 26px; transition: all 0.3s ease; }
         .crown-box.garlanded { background-color: #FFF0F5; border-color: #FF69B4; box-shadow: 0 0 15px #FF69B4; }
         
-        .milestone-alert { width: 100%; max-width: 380px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 15px; box-sizing: border-box; text-align: center; font-size: 14px; font-weight: 700; color: #1B5E20; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); min-height: 90px; display: flex; align-items: center; justify-content: center; }
+        .milestone-alert { width: 100%; max-width: 360px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 20px; box-sizing: border-box; text-align: center; font-size: 14px; font-weight: 700; color: #1B5E20; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); min-height: 80px; display: flex; align-items: center; justify-content: center; }
         
-        .novena-grid-container { width: 100%; max-width: 380px; background-color: #FFF; border-radius: 20px; padding: 15px; box-sizing: border-box; border: 2px solid #A5D6A7; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 15px; display: flex; justify-content: center; }
-        .novena-grid { display: flex; flex-direction: column-reverse; gap: 8px; width: 100%; }
-        .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; width: 100%; justify-items: center; }
+        .novena-grid-container { width: 100%; max-width: 360px; background-color: #FFF; border-radius: 18px; padding: 12px; box-sizing: border-box; border: 2px solid #A5D6A7; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .novena-grid { display: flex; flex-direction: column-reverse; gap: 6px; width: 100%; }
+        .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; width: 100%; justify-items: center; }
         
         .grid-day { width: 52px; height: 52px; background-color: #F9F9F9; border: 1px solid #D5CDBF; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 4px 0 4px 0; box-sizing: border-box; transition: all 0.2s; position: relative; }
         .grid-day span { font-size: 11px; font-weight: 800; color: #757575; line-height: 11px; }
-        .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; }
+        .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; color: #FFF; }
         .grid-day.passed span { color: rgba(255,255,255,0.7); }
-        .grid-day.current { background-color: #A5D6A7; border-color: #2E7D32; box-shadow: 0 0 8px rgba(46,125,50,0.4); }
+        .grid-day.current { background-color: #A5D6A7; border-color: #2E7D32; box-shadow: 0 0 8px rgba(46,125,50,0.4); color: #1B5E20; }
         .grid-day.current span { color: #1B5E20; }
         
         .sheep-slot { font-size: 20px; height: 24px; line-height: 24px; display: flex; justify-content: center; align-items: center; width: 100%; }
         
-        .prayer-card { width: 100%; max-width: 380px; background-color: #FFF; border-radius: 16px; padding: 18px; margin-bottom: 15px; border: 2px solid #C8E6C9; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.02); min-height: 140px; display: flex; flex-direction: column; }
-        .prayer-header { font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; color: #1B5E20; border-bottom: 1px solid #E8F5E9; padding-bottom: 4px; }
-        .prayer-text { font-size: 14px; color: #3A3A3C; line-height: 1.5; font-family: Georgia, serif; white-space: pre-line; flex-grow: 1; }
-        
-        .action-btn { width: 100%; max-width: 380px; background-color: #1B5E20; color: #FFF; border: none; padding: 18px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); -webkit-tap-highlight-color: transparent; }
-        .action-btn:active { transform: scale(0.99); }
-        
-        .devotions-container { width: 100%; max-width: 380px; margin-top: 10px; border-top: 2px solid #C8E6C9; padding-top: 15px; }
-        .closing-card { background-color: #FFF; border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid #E8F5E9; }
-        .closing-card-title { font-size: 13px; font-weight: 700; color: #1B5E20; margin-bottom: 4px; font-family: Georgia, serif; }
-        .closing-card-text { font-size: 13px; color: #4A4A4C; line-height: 1.5; font-family: Georgia, serif; white-space: pre-line; }
+        .action-btn { width: 100%; max-width: 360px; background-color: #1B5E20; color: #FFF; border: none; padding: 16px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); }
         .reset-btn { background: none; border: none; color: #757575; font-size: 12px; font-weight: 600; cursor: pointer; padding: 8px; text-transform: uppercase; width: 100%; text-align: center; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="lang-selector">
-        <button class="toggle-btn active" id="btn-en" onclick="setLanguage('en')">ENG</button>
-        <button class="toggle-btn" id="btn-ta" onclick="setLanguage('ta')">TAM</button>
-    </div>
-
-    <h1 class="app-title" id="app-title">54-Day Novena Pilgrimage</h1>
+    <h1 class="app-title">54-Day Novena Pilgrimage</h1>
     <div class="grid-chart-title">Novena Day Calendar Chart</div>
 
     <div class="mountain-map">
-        <div class="map-bg-grass"></div>
-        <div class="mary-peak-container">
-            <div class="crown-box" id="crown-element">👑</div>
-        </div>
+        <div class="crown-box" id="crown-element">👑</div>
     </div>
 
     <div class="milestone-alert" id="milestone-box">Welcome! Click below to start your 54-Day Novena progress track.</div>
@@ -68,39 +47,114 @@
         <div id="chart-grid" class="novena-grid"></div>
     </div>
 
-    <div class="prayer-card">
-        <div class="prayer-header" id="prayer-header">Novena Day Tracker</div>
-        <div class="prayer-text" id="prayer-text">Loading Day Progress...</div>
-    </div>
-
     <button class="action-btn" id="action-btn" onclick="handleNextStep()">Begin Novena Journey</button>
-
-    <div class="devotions-container">
-        <div class="closing-card">
-            <div class="closing-card-title" id="label-queen">Hail, Holy Queen (Salve Regina)</div>
-            <div class="closing-card-text" id="text-queen">Loading...</div>
-        </div>
-        <div class="closing-card">
-            <div class="closing-card-title" id="label-memorare">The Memorare</div>
-            <div class="closing-card-text" id="text-memorare">Loading...</div>
-        </div>
-        <button class="reset-btn" id="btn-reset" onclick="resetNovena()">Reset Novena Progress</button>
-    </div>
+    <button class="reset-btn" id="btn-reset" onclick="resetNovena()">Reset Progress</button>
 
     <script>
-        let currentDay = 0; 
-        let lang = 'en';
-        const TOTAL_DAYS = 54; 
+        let currentDay = 0;
+        const TOTAL_DAYS = 54;
 
-        const PRAYER_DATA = {
-            en: {
-                title: "54-Day Novena Pilgrimage", begin: "Begin Novena Journey", advance: "Leap Lost Lamb 🌹", finished: "Novena Completed ✨", reset: "Reset Novena Progress", lblQueen: "Hail, Holy Queen (Salve Regina)", lblMemorare: "The Memorare",
-                msgDay0: "Welcome to your 54-Day Novena tracker! Click the button below to start your spiritual journey.",
-                msgDay9: "✨ Day 9 Milestone reached!\nNine days of dedicated prayer have carved a path of light into your soul. You are building a beautiful holy habit. Rest your worries here today and let grace guide your steps tomorrow.",
-                msgDay27: "🎁 Day 27 Halfway Threshold!\n27 days of constant devotion accomplished! Halfway up the mountain trail, your spirit is growing stronger. Receive the gift of profound inner peace today. Trust that the seeds you have planted in prayer are already blooming.",
-                msgThanksgiving: "🌻 Thanksgiving Novena Mode:\nYou are now entering the second 27-day segment, tracking your path with an attitude of gratitude.",
-                msgDay54: "🌸🎈 CONGRATULATIONS! NOVENA FULFILLED! 🎈🌸\nYour 54-Day Novena cycle is fully accomplished. A beautiful crown of blooming flowers, balloons, and balloons has been placed on the Crown of Mother Mary! ✨🎈💐",
-                signCross: "In the name of the Father, and of the Son, and of the Holy Spirit. Amen.",
-                creed: "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; he descended into hell; on the third day he rose again from the dead; he ascended into heaven, and is seated at the right hand of God the Father almighty; from there he will come to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.",
-                ourFather: "Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.",
-Use code with caution.
+        const MILESTONE_MESSAGES = {
+            day0: "Welcome to your 54-Day Novena tracker! Click the button below to start your spiritual journey.",
+            day9: "✨ Day 9 Milestone reached!\nNine days of dedicated prayer have carved a path of light into your soul. You are building a beautiful holy habit. Rest your worries here today and let grace guide your steps tomorrow.",
+            day27: "🎁 Day 27 Halfway Threshold!\n27 days of constant devotion accomplished! Halfway up the mountain trail, your spirit is growing stronger. Receive the gift of profound inner peace today. Trust that the seeds you have planted in prayer are already blooming.",
+            thanksgiving: "🌻 Thanksgiving Novena Mode:\nYou are now entering the second 27-day segment, tracking your path with an attitude of gratitude.",
+            day54: "🌸🎈 CONGRATULATIONS! NOVENA FULFILLED! 🎈🌸\nYour 54-Day Novena cycle is fully accomplished. A beautiful crown of blooming flowers, balloons, and balloons has been placed on the Crown of Mother Mary! ✨🎈💐"
+        };
+
+        function buildGridUI() {
+            const grid = document.getElementById('chart-grid');
+            grid.innerHTML = '';
+            
+            for (let row = 0; row < 9; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'grid-row';
+                
+                for (let col = 1; col <= 6; col++) {
+                    const dayNum = (row * 6) + col;
+                    
+                    const dayBox = document.createElement('div');
+                    dayBox.className = 'grid-day';
+                    dayBox.id = `day-${dayNum}`;
+                    
+                    const span = document.createElement('span');
+                    span.innerText = dayNum;
+                    
+                    const slot = document.createElement('div');
+                    slot.className = 'sheep-slot';
+                    slot.id = `slot-${dayNum}`;
+                    
+                    dayBox.appendChild(span);
+                    dayBox.appendChild(slot);
+                    rowDiv.appendChild(dayBox);
+                }
+                grid.appendChild(rowDiv);
+            }
+        }
+
+        function updateTrackerDisplay() {
+            const milestoneBox = document.getElementById('milestone-box');
+            const crownElement = document.getElementById('crown-element');
+            const actionBtn = document.getElementById('action-btn');
+
+            for (let d = 1; d <= TOTAL_DAYS; d++) {
+                const dayBox = document.getElementById(`day-${d}`);
+                const slot = document.getElementById(`slot-${d}`);
+                
+                if (dayBox && slot) {
+                    dayBox.classList.remove('passed', 'current');
+                    slot.innerText = "";
+                    
+                    if (d < currentDay) {
+                        dayBox.classList.add('passed');
+                    } else if (d === currentDay) {
+                        dayBox.classList.add('current');
+                        slot.innerText = "🐑"; 
+                    }
+                }
+            }
+
+            if (currentDay === 0) {
+                milestoneBox.innerText = MILESTONE_MESSAGES.day0;
+                crownElement.classList.remove('garlanded');
+                crownElement.innerText = "👑";
+                actionBtn.disabled = false;
+                actionBtn.innerText = "Begin Novena Journey";
+            } else if (currentDay === 9) {
+                milestoneBox.innerText = MILESTONE_MESSAGES.day9;
+            } else if (currentDay === 27) {
+                milestoneBox.innerText = MILESTONE_MESSAGES.day27;
+            } else if (currentDay > 27 && currentDay < 54) {
+                milestoneBox.innerText = MILESTONE_MESSAGES.thanksgiving + ` (Day ${currentDay})`;
+            } else if (currentDay === 54) {
+                milestoneBox.innerText = MILESTONE_MESSAGES.day54;
+                crownElement.classList.add('garlanded');
+                crownElement.innerText = "🌸";
+                actionBtn.innerText = "Novena Fulfilled ✨";
+                actionBtn.disabled = true;
+            } else {
+                milestoneBox.innerText = `Day ${currentDay} complete. Keep moving forward!`;
+            }
+            
+            if (currentDay > 0 && currentDay < 54) {
+                actionBtn.innerText = `Log Day ${currentDay + 1} Progress 🌹`;
+            }
+        }
+
+        function handleNextStep() {
+            if (currentDay < TOTAL_DAYS) {
+                currentDay++;
+                updateTrackerDisplay();
+            }
+        }
+
+        function resetNovena() {
+            currentDay = 0;
+            updateTrackerDisplay();
+        }
+
+        buildGridUI();
+        updateTrackerDisplay();
+    </script>
+</body>
+</html>
