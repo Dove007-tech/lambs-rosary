@@ -6,104 +6,106 @@
     <title>54-Day Novena Pilgrimage Tracker</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #E8F5E9; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; box-sizing: border-box; }
+        .lang-selector { display: flex; background-color: #C8E6C9; border-radius: 25px; padding: 4px; margin-bottom: 15px; width: 100%; max-width: 400px; justify-content: space-around; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.toggle-btn { background: none; border: none; padding: 10px 14px; font-size: 12px; font-weight: 700; color: #2E7D32; cursor: pointer; border-radius: 20px; flex: 1; text-transform: uppercase; transition: all 0.2s; }
+        button.toggle-btn.active { background-color: #1B5E20; color: #FFF; }
         .app-title { font-size: 24px; font-weight: 800; color: #1B5E20; margin: 15px 0 5px 0; font-family: Georgia, serif; text-align: center; }
-        .grid-chart-title { font-size: 13px; font-weight: 800; color: #4CAF50; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+        .step-counter { font-size: 13px; color: #4CAF50; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
         
-        .mountain-map { width: 360px; height: 120px; background-color: #A5D6A7; border-radius: 25px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; }
-        .crown-box { width: 64px; height: 64px; border-radius: 32px; border: 4px solid #FFD54F; background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 28px; transition: all 0.3s ease; }
+        .mountain-map { width: 100%; max-width: 380px; height: 110px; background-color: #A5D6A7; border-radius: 25px; position: relative; overflow: hidden; border: 4px solid #81C784; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; }
+        .crown-box { width: 60px; height: 60px; border-radius: 30px; border: 4px solid #FFD54F; background-color: #FFF; display: flex; justify-content: center; align-items: center; font-size: 26px; transition: all 0.3s ease; }
         .crown-box.garlanded { background-color: #FFF0F5; border-color: #FF69B4; box-shadow: 0 0 15px #FF69B4; }
         
-        .milestone-alert { width: 100%; max-width: 360px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 15px; box-sizing: border-box; text-align: center; font-size: 14px; font-weight: 700; color: #1B5E20; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); min-height: 80px; display: flex; align-items: center; justify-content: center; }
+        .milestone-alert { width: 100%; max-width: 380px; background-color: #FFF9C4; border: 2px solid #2E7D32; border-radius: 14px; padding: 14px; margin-bottom: 15px; box-sizing: border-box; text-align: center; font-size: 14px; font-weight: 700; color: #1B5E20; white-space: pre-line; box-shadow: 0 4px 8px rgba(0,0,0,0.05); min-height: 90px; display: flex; align-items: center; justify-content: center; }
         
-        .novena-grid-container { width: 100%; max-width: 360px; margin-bottom: 15px; background-color: #FFF; border-radius: 18px; padding: 12px; box-sizing: border-box; border: 2px solid #A5D6A7; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .novena-grid { display: flex; flex-direction: column-reverse; gap: 6px; width: 100%; }
-        .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; width: 100%; }
+        .novena-grid-container { width: 100%; max-width: 380px; background-color: #FFF; border-radius: 20px; padding: 15px; box-sizing: border-box; border: 2px solid #A5D6A7; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 15px; }
+        .novena-grid { display: flex; flex-direction: column-reverse; gap: 8px; width: 100%; }
+        .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; width: 100%; }
         
-        .grid-day { height: 46px; background-color: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 11px; font-weight: 700; color: #616161; transition: all 0.2s; position: relative; }
-        .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; color: #FFF; }
-        .grid-day.current { background-color: #81C784; border-color: #2E7D32; color: #FFF; font-size: 12px; box-shadow: 0 0 6px #2E7D32; }
-        .sheep-slot { font-size: 14px; margin-top: 2px; height: 16px; line-height: 16px; }
+        .grid-day { height: 62px; background-color: #F9F9F9; border: 1px solid #D5CDBF; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 4px 0 6px 0; box-sizing: border-box; transition: all 0.2s; }
+        .grid-day span { font-size: 11px; font-weight: 800; color: #757575; }
+        .grid-day.passed { background-color: #2E7D32; border-color: #1B5E20; }
+        .grid-day.passed span { color: rgba(255,255,255,0.7); }
+        .grid-day.current { background-color: #A5D6A7; border-color: #2E7D32; box-shadow: 0 0 8px rgba(46,125,50,0.4); }
+        .grid-day.current span { color: #1B5E20; font-size: 12px; }
         
-        .action-btn { width: 100%; max-width: 360px; background-color: #1B5E20; color: #FFF; border: none; padding: 16px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); -webkit-tap-highlight-color: transparent; }
+        .sheep-slot { font-size: 22px; height: 26px; line-height: 26px; font-weight: normal; display: flex; justify-content: center; align-items: center; }
+        
+        .prayer-card { width: 100%; max-width: 380px; background-color: #FFF; border-radius: 16px; padding: 18px; margin-bottom: 15px; border: 2px solid #C8E6C9; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.02); min-height: 140px; display: flex; flex-direction: column; }
+        .prayer-header { font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; color: #1B5E20; border-bottom: 1px solid #E8F5E9; padding-bottom: 4px; }
+        .prayer-text { font-size: 14px; color: #3A3A3C; line-height: 1.5; font-family: Georgia, serif; white-space: pre-line; flex-grow: 1; }
+        
+        .action-btn { width: 100%; max-width: 380px; background-color: #1B5E20; color: #FFF; border: none; padding: 18px; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(27,94,32,0.2); -webkit-tap-highlight-color: transparent; }
         .action-btn:active { transform: scale(0.99); }
+        
+        .devotions-container { width: 100%; max-width: 380px; margin-top: 10px; border-top: 2px solid #C8E6C9; padding-top: 15px; }
+        .closing-card { background-color: #FFF; border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid #E8F5E9; }
+        .closing-card-title { font-size: 13px; font-weight: 700; color: #1B5E20; margin-bottom: 4px; font-family: Georgia, serif; }
+        .closing-card-text { font-size: 13px; color: #4A4A4C; line-height: 1.5; font-family: Georgia, serif; white-space: pre-line; }
         .reset-btn { background: none; border: none; color: #757575; font-size: 12px; font-weight: 600; cursor: pointer; padding: 8px; text-transform: uppercase; width: 100%; text-align: center; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <h1 class="app-title">54-Day Novena Pilgrimage</h1>
-    <div class="grid-chart-title">Novena Day Calendar Chart</div>
-
-    <div class="mountain-map">
-        <div class="crown-box" id="crown-element">👑</div>
+    <div class="lang-selector">
+        <button class="toggle-btn active" id="btn-en" onclick="setLanguage('en')">ENG</button>
+        <button class="toggle-btn" id="btn-ta" onclick="setLanguage('ta')">TAM</button>
     </div>
 
-    <div class="milestone-alert" id="milestone-box">Welcome! Click below to start your 54-Day Novena progress track.</div>
+    <h1 class="app-title" id="app-title">54-Day Novena Pilgrimage</h1>
+    <div class="step-counter" id="step-counter">Preparation Steps</div>
 
-    <div class="novena-grid-container">
-        <div id="chart-grid" class="novena-grid">
-            <div class="grid-row">
-                <div class="grid-day" id="day-49"><span>49</span><div class="sheep-slot" id="slot-49"></div></div>
-                <div class="grid-day" id="day-50"><span>50</span><div class="sheep-slot" id="slot-50"></div></div>
-                <div class="grid-day" id="day-51"><span>51</span><div class="sheep-slot" id="slot-51"></div></div>
-                <div class="grid-day" id="day-52"><span>52</span><div class="sheep-slot" id="slot-52"></div></div>
-                <div class="grid-day" id="day-53"><span>53</span><div class="sheep-slot" id="slot-53"></div></div>
-                <div class="grid-day" id="day-54"><span>54</span><div class="sheep-slot" id="slot-54"></div></div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-day" id="day-43"><span>43</span><div class="sheep-slot" id="slot-43"></div></div>
-                <div class="grid-day" id="day-44"><span>44</span><div class="sheep-slot" id="slot-44"></div></div>
-                <div class="grid-day" id="day-45"><span>45</span><div class="sheep-slot" id="slot-45"></div></div>
-                <div class="grid-day" id="day-46"><span>46</span><div class="sheep-slot" id="slot-46"></div></div>
-                <div class="grid-day" id="day-47"><span>47</span><div class="sheep-slot" id="slot-47"></div></div>
-                <div class="grid-day" id="day-48"><span>48</span><div class="sheep-slot" id="slot-48"></div></div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-day" id="day-37"><span>37</span><div class="sheep-slot" id="slot-37"></div></div>
-                <div class="grid-day" id="day-38"><span>38</span><div class="sheep-slot" id="slot-38"></div></div>
-                <div class="grid-day" id="day-39"><span>39</span><div class="sheep-slot" id="slot-39"></div></div>
-                <div class="grid-day" id="day-40"><span>40</span><div class="sheep-slot" id="slot-40"></div></div>
-                <div class="grid-day" id="day-41"><span>41</span><div class="sheep-slot" id="slot-41"></div></div>
-                <div class="grid-day" id="day-42"><span>42</span><div class="sheep-slot" id="slot-42"></div></div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-day" id="day-31"><span>31</span><div class="sheep-slot" id="slot-31"></div></div>
-                <div class="grid-day" id="day-32"><span>32</span><div class="sheep-slot" id="slot-32"></div></div>
-                <div class="grid-day" id="day-33"><span>33</span><div class="sheep-slot" id="slot-33"></div></div>
-                <div class="grid-day" id="day-34"><span>34</span><div class="sheep-slot" id="slot-34"></div></div>
-                <div class="grid-day" id="day-35"><span>35</span><div class="sheep-slot" id="slot-35"></div></div>
-                <div class="grid-day" id="day-36"><span>36</span><div class="sheep-slot" id="slot-36"></div></div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-day" id="day-25"><span>25</span><div class="sheep-slot" id="slot-25"></div></div>
-                <div class="grid-day" id="day-26"><span>26</span><div class="sheep-slot" id="slot-26"></div></div>
-                <div class="grid-day" id="day-27"><span>27</span><div class="sheep-slot" id="slot-27"></div></div>
-                <div class="grid-day" id="day-28"><span>28</span><div class="sheep-slot" id="slot-28"></div></div>
-                <div class="grid-day" id="day-29"><span>29</span><div class="sheep-slot" id="slot-29"></div></div>
-                <div class="grid-day" id="day-30"><span>30</span><div class="sheep-slot" id="slot-30"></div></div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-day" id="day-19"><span>19</span><div class="sheep-slot" id="slot-19"></div></div>
-                <div class="grid-day" id="day-20"><span>20</span><div class="sheep-slot" id="slot-20"></div></div>
-                <div class="grid-day" id="day-21"><span>21</span><div class="sheep-slot" id="slot-21"></div></div>
-                <div class="grid-day" id="day-22"><span>22</span><div class="sheep-slot" id="slot-22"></div></div>
-                <div class="grid-day" id="day-23"><span>23</span><div class="sheep-slot" id="slot-23"></div></div>
-                <div class="grid-day" id="day-24"><span>24</span><div class="sheep-slot" id="slot-24"></div></div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-day" id="day-13"><span>13</span><div class="sheep-slot" id="slot-13"></div></div>
-                <div class="grid-day" id="day-14"><span>14</span><div class="sheep-slot" id="slot-14"></div></div>
-                <div class="grid-day" id="day-15"><span>15</span><div class="sheep-slot" id="slot-15"></div></div>
-                <div class="grid-day" id="day-16"><span>16</span><div class="sheep-slot" id="slot-16"></div></div>
-                <div class="grid-day" id="day-17"><span>17</span><div class="sheep-slot" id="slot-17"></div></div>
-                <div class="grid-day" id="day-18"><span>18</span><div class="sheep-slot" id="slot-18"></div></div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-day" id="day-7"><span>7</span><div class="sheep-slot" id="slot-7"></div></div>
-                <div class="grid-day" id="day-8"><span>8</span><div class="sheep-slot" id="slot-8"></div></div>
-                <div class="grid-day" id="day-9"><span>9</span><div class="sheep-slot" id="slot-9"></div></div>
-                <div class="grid-day" id="day-10"><span>10</span><div class="sheep-slot" id="slot-10"></div></div>
-                <div class="grid-day" id="day-11"><span>11</span><div class="sheep-slot" id="slot-11"></div></div>
-                <div class="grid-day" id="day-12"><span>12</span><div class="sheep-slot" id="slot-12"></div></div>
-            </div>
-            <div class="grid-row">
+    <div class="mountain-map">
+        <div class="map-bg-grass"></div>
+        <div class="mary-peak-container">
+            <div class="crown-box" id="crown-element">👑</div>
+            <div class="peak-label" id="peak-label">Our Lady</div>
+        </div>
+        <div class="lamb-container" id="lamb"></div>
+    </div>
+
+    <div class="milestone-alert" id="milestone-box"></div>
+
+    <div class="grid-chart-title" id="chart-heading">Novena Day Calendar Chart</div>
+    <div id="chart-grid" class="novena-grid">
+        <div class="grid-row">
+            <div class="grid-day" id="day-49"><span>49</span><div class="sheep-slot" id="slot-49"></div></div>
+            <div class="grid-day" id="day-50"><span>50</span><div class="sheep-slot" id="slot-50"></div></div>
+            <div class="grid-day" id="day-51"><span>51</span><div class="sheep-slot" id="slot-51"></div></div>
+            <div class="grid-day" id="day-52"><span>52</span><div class="sheep-slot" id="slot-52"></div></div>
+            <div class="grid-day" id="day-53"><span>53</span><div class="sheep-slot" id="slot-53"></div></div>
+            <div class="grid-day" id="day-54"><span>54</span><div class="sheep-slot" id="slot-54"></div></div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-day" id="day-43"><span>43</span><div class="sheep-slot" id="slot-43"></div></div>
+            <div class="grid-day" id="day-44"><span>44</span><div class="sheep-slot" id="slot-44"></div></div>
+            <div class="grid-day" id="day-45"><span>45</span><div class="sheep-slot" id="slot-45"></div></div>
+            <div class="grid-day" id="day-46"><span>46</span><div class="sheep-slot" id="slot-46"></div></div>
+            <div class="grid-day" id="day-47"><span>47</span><div class="sheep-slot" id="slot-47"></div></div>
+            <div class="grid-day" id="day-48"><span>48</span><div class="sheep-slot" id="slot-48"></div></div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-day" id="day-37"><span>37</span><div class="sheep-slot" id="slot-37"></div></div>
+            <div class="grid-day" id="day-38"><span>38</span><div class="sheep-slot" id="slot-38"></div></div>
+            <div class="grid-day" id="day-39"><span>39</span><div class="sheep-slot" id="slot-39"></div></div>
+            <div class="grid-day" id="day-40"><span>40</span><div class="sheep-slot" id="slot-40"></div></div>
+            <div class="grid-day" id="day-41"><span>41</span><div class="sheep-slot" id="slot-41"></div></div>
+            <div class="grid-day" id="day-42"><span>42</span><div class="sheep-slot" id="slot-42"></div></div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-day" id="day-31"><span>31</span><div class="sheep-slot" id="slot-31"></div></div>
+            <div class="grid-day" id="day-32"><span>32</span><div class="sheep-slot" id="slot-32"></div></div>
+            <div class="grid-day" id="day-33"><span>33</span><div class="sheep-slot" id="slot-33"></div></div>
+            <div class="grid-day" id="day-34"><span>34</span><div class="sheep-slot" id="slot-34"></div></div>
+            <div class="grid-day" id="day-35"><span>35</span><div class="sheep-slot" id="slot-35"></div></div>
+            <div class="grid-day" id="day-36"><span>36</span><div class="sheep-slot" id="slot-36"></div></div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-day" id="day-25"><span>25</span><div class="sheep-slot" id="slot-25"></div></div>
+            <div class="grid-day" id="day-26"><span>26</span><div class="sheep-slot" id="slot-26"></div></div>
+            <div class="grid-day" id="day-27"><span>27</span><div class="sheep-slot" id="slot-27"></div></div>
+            <div class="grid-day" id="day-28"><span>28</span><div class="sheep-slot" id="slot-28"></div></div>
+            <div class="grid-day" id="day-29"><span>29</span><div class="sheep-slot" id="slot-29"></div></div>
+            <div class="grid-day" id="day-30"><span>30</span><div class="sheep-slot" id="slot-30"></div></div>
+        </div>
+        <div class="grid-row">
